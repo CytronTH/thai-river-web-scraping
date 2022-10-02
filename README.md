@@ -129,6 +129,114 @@ Node-Red flow
                 "8ed8a3f80d7fb08a"
             ],
             [
+[
+    {
+        "id": "0f746ec73085280d",
+        "type": "inject",
+        "z": "ab4bb3ba14295947",
+        "name": "ดึงข้อมูลทุกๆ 10 นาที",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "417d580878d66055"
+            ]
+        ]
+    },
+    {
+        "id": "417d580878d66055",
+        "type": "exec",
+        "z": "ab4bb3ba14295947",
+        "command": "python3 /home/kunyaiadmin/test.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "ดึงข้อมูลจากแผนที่ลุ่มน้ำ",
+        "x": 800,
+        "y": 160,
+        "wires": [
+            [
+                "63507a1685d32b4c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "63507a1685d32b4c",
+        "type": "json",
+        "z": "ab4bb3ba14295947",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 990,
+        "y": 140,
+        "wires": [
+            [
+                "c275fc66e824fe49",
+                "2f077e03a5109fbd",
+                "6ec7db5f924a6287"
+            ]
+        ]
+    },
+    {
+        "id": "c275fc66e824fe49",
+        "type": "switch",
+        "z": "ab4bb3ba14295947",
+        "name": "เกณฑ์ระดับน้ำปัจจุบัน",
+        "property": "payload.tele[34].percent",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "80",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "80",
+                "vt": "num",
+                "v2": "100",
+                "v2t": "num"
+            },
+            {
+                "t": "gt",
+                "v": "100",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 1060,
+        "y": 220,
+        "wires": [
+            [
+                "2b580971a3e08f7a"
+            ],
+            [
+                "8ed8a3f80d7fb08a"
+            ],
+            [
                 "d4abff49f499f3be"
             ]
         ]
@@ -197,8 +305,8 @@ Node-Red flow
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1170,
-        "y": 60,
+        "x": 1230,
+        "y": 140,
         "wires": [
             [
                 "89e0a22e71ef2c16"
@@ -209,16 +317,17 @@ Node-Red flow
         "id": "89e0a22e71ef2c16",
         "type": "debug",
         "z": "ab4bb3ba14295947",
-        "name": "",
+        "name": "ชื่อสถานี",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1370,
-        "y": 60,
+        "x": 1420,
+        "y": 140,
         "wires": []
     },
     {
@@ -244,15 +353,16 @@ Node-Red flow
         "id": "d91ac766ae44e9d9",
         "type": "debug",
         "z": "ab4bb3ba14295947",
-        "name": "",
+        "name": "อันตราย",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1550,
+        "x": 1540,
         "y": 280,
         "wires": []
     },
@@ -265,7 +375,7 @@ Node-Red flow
         "order": 1,
         "width": 0,
         "height": 0,
-        "label": "สถานีโทรมาตรอุทัยธานี",
+        "label": "สถานีโทรมาตร",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -294,8 +404,8 @@ Node-Red flow
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1180,
-        "y": 360,
+        "x": 1080,
+        "y": 340,
         "wires": [
             []
         ]
@@ -319,30 +429,13 @@ Node-Red flow
         "from": "",
         "to": "",
         "reg": false,
-        "x": 920,
+        "x": 960,
         "y": 280,
         "wires": [
             [
-                "04a41cc753f87161",
-                "73e5f2fe0e735047"
+                "04a41cc753f87161"
             ]
         ]
-    },
-    {
-        "id": "73e5f2fe0e735047",
-        "type": "debug",
-        "z": "ab4bb3ba14295947",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1230,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "063fefe75592dd27",
